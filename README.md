@@ -80,17 +80,55 @@ https://drive.google.com/drive/folders/1nE23vNCZjxn_xsxkrVdgqMTEEz_RbhoB?usp=sha
 ```
 src/
   ├── components/
-  │   ├── MovieCard.tsx
-  │   ├── MovieList.tsx
-  │   └── SearchBar.tsx
-  ├── types.ts
+  │   ├── common/           # Reusable components
+  │   │   ├── Button/
+  │   │   ├── Input/
+  │   │   ├── Modal/
+  │   │   └── ScrollToTop/
+  │   └── layout/           # Layout components
+  │       ├── Header/
+  │       └── Footer/
+  ├── pages/
+  │   ├── Home/
+  │   └── MovieDetail/
+  ├── hooks/
+  │   ├── useTheme.ts
+  │   ├── useToast.ts
+  │   ├── useMovieProviders.ts
+  │   ├── useMovieTrailer.ts
+  │   └── useMovies.ts
+  ├── services/
+  │   └── api.ts
+  ├── utils/
+  │   ├── constants.ts
+  │   ├── helpers.ts
+  │   └── types.ts
+  ├── styles/
+  │   ├── _variables.scss
+  │   ├── _mixins.scss
+  │   ├── _animations.scss
+  │   └── global.scss
+  ├── assets/
+  │   ├── images/
+  │   └── icons/
+  ├── context/
+  │   ├── ThemeContext.tsx
+  │   ├── ToastContext.tsx
+  │   └── ViewContext.tsx
+  ├── routes/
+  │   └── index.tsx
+  ├── types/
+  │   └── movie.types.ts
+  ├── constants/
+  ├── config/
+  │   ├── theme.ts
+  │   └── api.ts
   ├── App.tsx
-  └── App.css
+  └── main.tsx
 ```
 
 ## Contributing
 
 Feel free to submit issues and enhancement requests!
 
-# movie-app
 # movie-app
