@@ -1,0 +1,50 @@
+// Breakpoints
+$breakpoints: (
+  "xs": 0,
+  "sm": 576px,
+  "md": 768px,
+  "lg": 992px,
+  "xl": 1200px,
+  "xxl": 1400px,
+);
+
+// Spacing
+$spacing-unit: 8px;
+$spacing: (
+  "xs": $spacing-unit,
+  "sm": $spacing-unit * 2,
+  "md": $spacing-unit * 3,
+  "lg": $spacing-unit * 4,
+  "xl": $spacing-unit * 5,
+  "xxl": $spacing-unit * 6,
+);
+
+// Z-index
+$z-index: (
+  "modal": 1000,
+  "overlay": 900,
+  "dropdown": 800,
+  "header": 700,
+  "footer": 600,
+);
+
+// Border radius
+$border-radius: (
+  "sm": 4px,
+  "md": 8px,
+  "lg": 12px,
+  "xl": 16px,
+  "circle": 50%,
+);
+
+// Transitions
+$transition-duration: 0.3s;
+$transition-timing: ease;
+
+// Shadows
+$shadows: (
+  "sm": 0 2px 4px rgba(0, 0, 0, 0.1),
+  "md": 0 4px 8px rgba(0, 0, 0, 0.1),
+  "lg": 0 8px 16px rgba(0, 0, 0, 0.1),
+  "xl": 0 12px 24px rgba(0, 0, 0, 0.1),
+);

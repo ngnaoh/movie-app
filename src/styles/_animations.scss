@@ -1,0 +1,116 @@
+@use "./variables" as *;
+
+// Fade in
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+// Fade out
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+// Slide in from right
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+// Slide in from left
+@keyframes slideInLeft {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+// Scale in
+@keyframes scaleIn {
+  from {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+// Pulse
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+// Shake
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  10%,
+  30%,
+  50%,
+  70%,
+  90% {
+    transform: translateX(-5px);
+  }
+  20%,
+  40%,
+  60%,
+  80% {
+    transform: translateX(5px);
+  }
+}
+
+// Animation classes
+.fade-in {
+  animation: fadeIn $transition-duration $transition-timing;
+}
+
+.fade-out {
+  animation: fadeOut $transition-duration $transition-timing;
+}
+
+.slide-in-right {
+  animation: slideInRight $transition-duration $transition-timing;
+}
+
+.slide-in-left {
+  animation: slideInLeft $transition-duration $transition-timing;
+}
+
+.scale-in {
+  animation: scaleIn $transition-duration $transition-timing;
+}
+
+.pulse {
+  animation: pulse 1s $transition-timing infinite;
+}
+
+.shake {
+  animation: shake 0.5s $transition-timing;
+}
