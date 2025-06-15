@@ -1,0 +1,80 @@
+@use "sass:map";
+@use "../../../../styles/variables" as *;
+@use "../../../../styles/mixins" as *;
+
+.search-results {
+  position: absolute;
+  z-index: 1000;
+  top: 100%;
+  left: 0;
+  right: 0;
+  max-height: 400px;
+  overflow-y: auto;
+  background-color: var(--surface);
+  border-radius: map.get($border-radius, "md");
+  box-shadow: map.get($shadows, "md");
+  margin-top: 0.5rem;
+  z-index: 1000;
+  @include transition(transform, opacity);
+  transform-origin: top;
+  animation: slideDown 0.2s ease-out;
+
+  @include media-down("sm") {
+    margin-top: 0;
+  }
+
+  .loading,
+  .no-results {
+    padding: 1rem;
+    text-align: center;
+    color: var(--textSecondary);
+  }
+
+  .movie-item {
+    @include flex(row, flex-start, center);
+    gap: 1rem;
+    padding: 0.75rem 1rem;
+    text-decoration: none;
+    color: var(--text);
+    @include transition(background-color);
+
+    &:hover {
+      background-color: var(--background);
+    }
+
+    .poster {
+      width: 46px;
+      height: 69px;
+      object-fit: cover;
+      border-radius: map.get($border-radius, "sm");
+    }
+
+    .movie-info {
+      flex: 1;
+      min-width: 0;
+
+      .title {
+        margin: 0;
+        font-size: 0.875rem;
+        font-weight: 500;
+        @include text-ellipsis;
+      }
+
+      .year {
+        font-size: 0.75rem;
+        color: var(--textSecondary);
+      }
+    }
+  }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

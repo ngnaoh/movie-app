@@ -1,0 +1,226 @@
+@use "sass:map";
+@use "../../../styles/variables" as *;
+@use "../../../styles/mixins" as *;
+
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background-color: var(--surface);
+  box-shadow: map.get($shadows, "sm");
+  @include transition(background-color);
+
+  .container {
+    @include flex(row, space-between, center);
+    height: 4rem;
+    padding: 0 1rem;
+
+    @include media-up("sm") {
+      padding: 0 2rem;
+    }
+  }
+
+  .logo {
+    @include flex(row, flex-start, center);
+    gap: 0.5rem;
+    text-decoration: none;
+    color: var(--text);
+    @include transition(color);
+
+    &:hover {
+      color: var(--primary);
+    }
+
+    .icon {
+      font-size: 1.5rem;
+    }
+
+    .text {
+      font-size: 1.25rem;
+      font-weight: 600;
+      display: none;
+
+      @include media-up("sm") {
+        display: block;
+      }
+    }
+  }
+
+  .header-actions {
+    @include flex(row, flex-end, center);
+    gap: 1rem;
+
+    .search-container {
+      z-index: 100;
+      position: relative;
+      width: 300px;
+      @include transition(width, max-width);
+
+      &.searching {
+        width: 50vw;
+        @include media-down("sm") {
+          width: 100vw;
+        }
+      }
+
+      .search-form {
+        position: relative;
+        &:focus {
+          outline: transparent;
+        }
+        &:focus-visible {
+          outline: transparent;
+        }
+      }
+
+      @include media-up("sm") {
+        &:focus-within {
+          width: 50vw;
+        }
+      }
+
+      @include media-down("sm") {
+        width: 100vw;
+      }
+
+      @include media-down("sm") {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        max-width: none;
+        padding: 1rem;
+        background-color: var(--surface);
+        box-shadow: map.get($shadows, "md");
+        transform: translateY(-100%);
+        opacity: 0;
+        visibility: hidden;
+        @include transition(transform, opacity, visibility);
+
+        &.active {
+          transform: translateY(0);
+          opacity: 1;
+          visibility: visible;
+        }
+      }
+
+      .search-input {
+        width: 100%;
+        padding: 0.75rem 2rem 0.75rem 2.5rem;
+        border: 2px solid transparent;
+        border-radius: map.get($border-radius, "md");
+        background-color: var(--background);
+        color: var(--text);
+        font-size: 0.875rem;
+        @include transition(border-color, background-color, width);
+
+        &:focus {
+          border-color: var(--primary);
+          background-color: var(--surface);
+          outline: transparent;
+        }
+
+        &::placeholder {
+          color: var(--textSecondary);
+        }
+      }
+
+      .search-icon {
+        position: absolute;
+        left: 1rem;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--textSecondary);
+        font-size: 1rem;
+        pointer-events: none;
+        @include media-down("sm") {
+          left: 1.2rem;
+        }
+      }
+
+      .close-search {
+        position: absolute;
+        right: 1.6rem;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--textSecondary);
+        font-size: 1rem;
+        padding: 0.25rem;
+        border-radius: 50%;
+        @include transition(background-color, color);
+
+        &:hover {
+          background-color: var(--background);
+          color: var(--text);
+        }
+      }
+    }
+
+    .action-buttons {
+      @include flex(row, flex-end, center);
+      gap: 0.5rem;
+
+      .action-button {
+        @include flex(row, center, center);
+        width: 2.5rem;
+        height: 2.5rem;
+        border-radius: map.get($border-radius, "md");
+        color: var(--text);
+        font-size: 1.25rem;
+        @include transition(background-color, color, transform);
+        position: relative;
+        overflow: hidden;
+
+        &:hover {
+          background-color: var(--background);
+          color: var(--primary);
+          transform: translateY(-2px);
+        }
+
+        &:active {
+          transform: translateY(0);
+        }
+
+        &.search-toggle {
+          @include media-up("sm") {
+            display: none;
+          }
+        }
+
+        // Theme toggle animation
+        &[title*="Switch to"] {
+          .theme-icon {
+            position: absolute;
+            @include transition(transform);
+            transform: translateY(0);
+          }
+
+          &.theme-changing {
+            .theme-icon {
+              animation: themeToggle 0.3s ease-in-out;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@keyframes themeToggle {
+  0% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  50% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  51% {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}

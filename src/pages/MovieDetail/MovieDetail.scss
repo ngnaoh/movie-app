@@ -1,0 +1,212 @@
+@use "sass:map";
+@use "../../styles/variables" as *;
+@use "../../styles/mixins" as *;
+
+.movie-detail {
+  min-height: 100vh;
+  position: relative;
+
+  .backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-size: cover;
+    background-position: center;
+    z-index: 0;
+
+    .overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0.8) 0%,
+        rgba(0, 0, 0, 0.4) 50%,
+        var(--background) 100%
+      );
+    }
+  }
+
+  .container {
+    position: relative;
+    z-index: 1;
+    padding: 2rem 1rem;
+  }
+
+  .back-button {
+    margin-bottom: 2rem;
+    padding: 0.5rem 1rem;
+  }
+
+  .content {
+    @include flex(column, flex-start, flex-start);
+    gap: 2rem;
+
+    @include media-up("md") {
+      flex-direction: row;
+      align-items: flex-start;
+    }
+
+    .poster {
+      width: 100%;
+      max-width: 300px;
+      margin: 0 auto;
+
+      @include media-up("md") {
+        margin: 0;
+      }
+
+      img {
+        width: 100%;
+        border-radius: map.get($border-radius, "md");
+        @include shadow("lg");
+      }
+    }
+
+    .info {
+      flex: 1;
+      color: var(--text);
+
+      .title {
+        @include typography(2rem, 700);
+        margin-bottom: 0.5rem;
+        color: whitesmoke;
+      }
+
+      .tagline {
+        @include typography(1.2rem, 400);
+        color: #b0b0b0;
+        // color: var(--textSecondary);
+        margin-bottom: 1.5rem;
+        font-style: italic;
+      }
+
+      .meta {
+        @include flex(row, flex-start, center);
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+        color: #b0b0b0;
+        span {
+          @include typography(0.9rem);
+        }
+
+        .rating {
+          color: #01b4e4;
+        }
+      }
+
+      .genres {
+        @include flex(row, flex-start, center);
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-bottom: 1.5rem;
+
+        .genre {
+          padding: 0.25rem 0.75rem;
+          border-radius: map.get($border-radius, "sm");
+          background-color: var(--surface);
+          color: var(--text);
+          @include typography(0.9rem);
+        }
+      }
+
+      .overview {
+        margin: 2rem 0;
+        color: whitesmoke;
+
+        h2 {
+          margin-bottom: 1rem;
+          font-size: 1.5rem;
+        }
+
+        p {
+          line-height: 1.6;
+          color: #b0b0b0;
+        }
+      }
+
+      .streaming-title,
+      .cast-title {
+        margin-bottom: 1.5rem;
+        font-size: 1.5rem;
+        color: whitesmoke;
+      }
+
+      .cast {
+        color: whitesmoke;
+
+        h2 {
+          @include typography(1.5rem, 600);
+          margin-bottom: 1rem;
+        }
+
+        .cast-list {
+          @include grid(2, 1rem);
+
+          @include media-up("sm") {
+            grid-template-columns: repeat(3, 1fr);
+          }
+
+          @include media-up("md") {
+            grid-template-columns: repeat(6, 1fr);
+          }
+
+          .actor {
+            @include flex(column, flex-start, center);
+            text-align: center;
+
+            img {
+              width: 100%;
+              aspect-ratio: 1;
+              object-fit: cover;
+              border-radius: map.get($border-radius, "circle");
+              margin-bottom: 0.5rem;
+            }
+
+            .name {
+              @include typography(0.9rem, 600);
+              @include truncate;
+              color: var(--text);
+            }
+
+            .character {
+              @include typography(0.8rem);
+              @include truncate;
+              color: var(--textSecondary);
+            }
+          }
+        }
+      }
+    }
+  }
+
+  &.loading {
+    @include flex(row, center, center);
+    min-height: 100vh;
+    font-size: 1.2rem;
+    color: var(--textSecondary);
+  }
+}
+
+@media (max-width: 768px) {
+  .movie-detail {
+    .content {
+      flex-direction: column;
+      gap: 2rem;
+
+      .poster {
+        width: 100%;
+        max-width: 300px;
+        margin: 0 auto;
+      }
+
+      .info {
+        width: 100%;
+      }
+    }
+  }
+}

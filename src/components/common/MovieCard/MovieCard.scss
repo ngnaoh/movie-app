@@ -1,0 +1,401 @@
+@use "sass:map";
+@use "../../../styles/variables" as *;
+@use "../../../styles/mixins" as *;
+
+.movie-card {
+  position: relative;
+  background-color: var(--surface);
+  border-radius: map.get($border-radius, "md");
+  overflow: hidden;
+  cursor: pointer;
+  @include shadow("sm");
+  @include transition(transform, box-shadow);
+
+  &.grid {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+
+    .poster-container {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 2/3;
+      overflow: hidden;
+
+      .movie-poster {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        @include transition(transform);
+      }
+
+      .user-score {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        width: 3.5rem;
+        height: 3.5rem;
+        background-color: rgba(0, 0, 0, 0.8);
+        border-radius: 50%;
+        @include flex(row, center, center);
+        z-index: 2;
+        transform: scale(0.8);
+        opacity: 0;
+        @include transition(transform, opacity);
+
+        .score-circle {
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          transform: rotate(-90deg);
+
+          path {
+            transition: stroke-dasharray 0.5s ease;
+          }
+        }
+
+        .score-text {
+          @include flex(column, center, center);
+          color: white;
+          font-weight: 600;
+
+          .score-value {
+            font-size: 1rem;
+            line-height: 1;
+          }
+
+          .score-percent {
+            font-size: 0.7rem;
+            opacity: 0.8;
+          }
+        }
+      }
+
+      .movie-overlay {
+        position: absolute;
+        z-index: 1000;
+        inset: 0;
+        background: linear-gradient(
+          to bottom,
+          rgba(0, 0, 0, 0) 0%,
+          rgba(0, 0, 0, 0.8) 100%
+        );
+        opacity: 0;
+        @include flex(column, flex-end, flex-start);
+        padding: 1rem;
+        @include transition(opacity);
+
+        .rating,
+        .popularity {
+          @include flex(row, flex-start, center);
+          gap: 0.5rem;
+          color: white;
+          font-weight: 600;
+          transform: translateY(20px);
+          opacity: 0;
+          @include transition(transform, opacity);
+
+          .star {
+            color: #ffd700;
+            font-size: 1.2rem;
+          }
+
+          .icon {
+            font-size: 1.2rem;
+          }
+        }
+
+        .rating {
+          transition-delay: 0.1s;
+        }
+
+        .popularity {
+          transition-delay: 0.2s;
+        }
+      }
+    }
+
+    .movie-info {
+      position: relative;
+      padding: 1rem;
+      flex: 1;
+      @include flex(column, flex-start, flex-start);
+      gap: 0.5rem;
+      overflow: hidden;
+
+      .movie-title {
+        @include typography(1.1rem, 600);
+        @include truncate(2);
+        color: var(--text);
+        width: 100%;
+      }
+
+      .movie-meta {
+        @include flex(row, flex-start, center);
+        gap: 1rem;
+        font-size: 0.9rem;
+        color: var(--textSecondary);
+      }
+
+      .movie-overview {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        padding: 1rem;
+        background-color: var(--surface);
+        transform: translateY(100%);
+        opacity: 0;
+        @include transition(transform, opacity);
+        @include typography(0.9rem);
+        color: var(--textSecondary);
+        line-height: 1.5;
+        overflow-y: auto;
+        z-index: 1;
+
+        &::-webkit-scrollbar {
+          width: 4px;
+        }
+
+        &::-webkit-scrollbar-track {
+          background: transparent;
+        }
+
+        &::-webkit-scrollbar-thumb {
+          background-color: var(--primary);
+          border-radius: 2px;
+        }
+      }
+
+      .movie-stats {
+        @include flex(row, flex-start, center);
+        gap: 1rem;
+        margin-top: auto;
+        width: 100%;
+
+        .stat {
+          @include flex(column, flex-start, flex-start);
+          gap: 0.25rem;
+
+          .label {
+            font-size: 0.8rem;
+            color: var(--textSecondary);
+          }
+
+          .value {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text);
+          }
+        }
+      }
+    }
+
+    &:hover {
+      @include shadow("md");
+
+      .movie-poster {
+        transform: scale(1.1);
+      }
+
+      .movie-overlay {
+        opacity: 1;
+
+        .rating,
+        .popularity {
+          transform: translateY(0);
+          opacity: 1;
+        }
+      }
+
+      .user-score {
+        transform: scale(1);
+        opacity: 1;
+        z-index: 1000;
+      }
+
+      .movie-info {
+        .movie-overview {
+          transform: translateY(0);
+          opacity: 1;
+        }
+      }
+    }
+  }
+
+  &.list {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    padding: 1.5rem;
+
+    @include media-up("sm") {
+      grid-template-columns: 200px 1fr;
+    }
+
+    .poster-container {
+      position: relative;
+      width: 100%;
+      height: 300px;
+      border-radius: map.get($border-radius, "sm");
+      overflow: hidden;
+
+      @include media-up("sm") {
+        width: 200px;
+      }
+
+      .movie-poster {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        @include transition(transform);
+      }
+
+      .user-score {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        width: 3.5rem;
+        height: 3.5rem;
+        background-color: rgba(0, 0, 0, 0.8);
+        border-radius: 50%;
+        @include flex(row, center, center);
+        z-index: 2;
+
+        .score-circle {
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          transform: rotate(-90deg);
+
+          path {
+            transition: stroke-dasharray 0.5s ease;
+          }
+        }
+
+        .score-text {
+          @include flex(column, center, center);
+          color: white;
+          font-weight: 600;
+
+          .score-value {
+            font-size: 1rem;
+            line-height: 1;
+          }
+
+          .score-percent {
+            font-size: 0.7rem;
+            opacity: 0.8;
+          }
+        }
+      }
+
+      .movie-overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          to bottom,
+          rgba(0, 0, 0, 0) 0%,
+          rgba(0, 0, 0, 0.8) 100%
+        );
+        opacity: 0;
+        @include flex(column, flex-end, flex-start);
+        padding: 1rem;
+        @include transition(opacity);
+
+        .rating,
+        .popularity {
+          @include flex(row, flex-start, center);
+          gap: 0.5rem;
+          color: white;
+          font-weight: 600;
+          transform: translateY(20px);
+          opacity: 0;
+          @include transition(transform, opacity);
+
+          .star {
+            color: #ffd700;
+            font-size: 1.2rem;
+          }
+
+          .icon {
+            font-size: 1.2rem;
+          }
+        }
+
+        .rating {
+          transition-delay: 0.1s;
+        }
+
+        .popularity {
+          transition-delay: 0.2s;
+        }
+      }
+    }
+
+    .movie-info {
+      @include flex(column, flex-start, flex-start);
+      gap: 1rem;
+
+      .movie-title {
+        @include typography(1.5rem, 600);
+        color: var(--text);
+      }
+
+      .movie-meta {
+        @include flex(row, flex-start, center);
+        gap: 1rem;
+        font-size: 1rem;
+        color: var(--textSecondary);
+      }
+
+      .movie-overview {
+        @include typography(1rem);
+        color: var(--textSecondary);
+        @include truncate(3);
+        line-height: 1.5;
+      }
+
+      .movie-stats {
+        @include flex(row, flex-start, center);
+        gap: 2rem;
+        margin-top: auto;
+
+        .stat {
+          @include flex(column, flex-start, flex-start);
+          gap: 0.25rem;
+
+          .label {
+            font-size: 0.9rem;
+            color: var(--textSecondary);
+          }
+
+          .value {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text);
+          }
+        }
+      }
+    }
+
+    &:hover {
+      @include shadow("md");
+
+      .movie-poster {
+        transform: scale(1.05);
+      }
+
+      .movie-overlay {
+        opacity: 1;
+
+        .rating,
+        .popularity {
+          transform: translateY(0);
+          opacity: 1;
+        }
+      }
+    }
+  }
+}

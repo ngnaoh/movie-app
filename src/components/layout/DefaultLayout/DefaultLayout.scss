@@ -1,0 +1,14 @@
+@use "../../../styles/variables" as *;
+@use "../../../styles/mixins" as *;
+
+.default-layout {
+  min-height: 100vh;
+  background-color: var(--background);
+  color: var(--text);
+
+  .main-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+  }
+}

@@ -1,0 +1,134 @@
+@use "sass:map";
+@use "../../../styles/variables" as *;
+@use "../../../styles/mixins" as *;
+
+.button {
+  @include flex(row, center, center);
+  gap: 0.5rem;
+  border: none;
+  border-radius: map.get($border-radius, "md");
+  font-weight: 500;
+  cursor: pointer;
+  @include transition(background-color, color, border-color, transform);
+  position: relative;
+  overflow: hidden;
+
+  // Variants
+  &.primary {
+    background-color: var(--primary);
+    color: white;
+
+    &:hover:not(:disabled) {
+      background-color: var(--secondary);
+    }
+
+    &:active:not(:disabled) {
+      transform: scale(0.98);
+    }
+  }
+
+  &.secondary {
+    background-color: var(--secondary);
+    color: white;
+
+    &:hover:not(:disabled) {
+      background-color: var(--primary);
+    }
+  }
+
+  &.outline {
+    background-color: transparent;
+    color: var(--primary);
+    border: 2px solid var(--primary);
+
+    &:hover:not(:disabled) {
+      background-color: var(--primary);
+      color: white;
+    }
+  }
+
+  &.text {
+    background-color: transparent;
+    color: var(--primary);
+    padding: 0.5rem;
+
+    &:hover:not(:disabled) {
+      background-color: rgba(var(--primary-rgb), 0.1);
+    }
+  }
+
+  &.icon {
+    background-color: transparent;
+    color: var(--text);
+    padding: 0.5rem;
+    border-radius: 50%;
+
+    &:hover:not(:disabled) {
+      background-color: rgba(var(--primary-rgb), 0.1);
+      color: var(--primary);
+    }
+
+    .icon {
+      font-size: 1.25rem;
+    }
+  }
+
+  &.ghost {
+    background-color: transparent;
+    color: var(--primary);
+    border: none;
+    &:hover:not(:disabled) {
+      background-color: var(--background);
+    }
+  }
+
+  // Sizes
+  &.sm {
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+  }
+
+  &.md {
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+  }
+
+  &.lg {
+    padding: 1rem 2rem;
+    font-size: 1.125rem;
+  }
+
+  // States
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+
+  &.full-width {
+    width: 100%;
+  }
+
+  // Loading state
+  .loading-spinner {
+    width: 1.25em;
+    height: 1.25em;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: white;
+    animation: spin 0.8s linear infinite;
+  }
+
+  // Icon
+  .icon {
+    @include flex(row, center, center);
+    font-size: 1.1em;
+    line-height: 1;
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

@@ -1,0 +1,123 @@
+@use "sass:map";
+@use "../../../styles/variables" as *;
+@use "../../../styles/mixins" as *;
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.movie-skeleton {
+  background-color: var(--surface);
+  border-radius: map.get($border-radius, "md");
+  overflow: hidden;
+  @include shadow("sm");
+  @include transition(transform);
+
+  &:hover {
+    transform: translateY(-4px);
+  }
+
+  &.grid {
+    .poster-skeleton {
+      aspect-ratio: 2/3;
+      width: 100%;
+    }
+
+    .content-skeleton {
+      padding: 1rem;
+    }
+  }
+
+  &.list {
+    @include flex(row, flex-start, flex-start);
+    gap: 1rem;
+
+    .poster-skeleton {
+      width: 120px;
+      height: 180px;
+      flex-shrink: 0;
+    }
+
+    .content-skeleton {
+      flex: 1;
+      padding: 1rem 1rem 1rem 0;
+    }
+  }
+
+  .poster-skeleton {
+    background: linear-gradient(
+      90deg,
+      var(--background) 25%,
+      var(--surface) 50%,
+      var(--background) 75%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+  }
+
+  .content-skeleton {
+    .title-skeleton {
+      height: 1.5rem;
+      width: 80%;
+      margin-bottom: 0.75rem;
+      border-radius: map.get($border-radius, "sm");
+      background: linear-gradient(
+        90deg,
+        var(--background) 25%,
+        var(--surface) 50%,
+        var(--background) 75%
+      );
+      background-size: 200% 100%;
+      animation: shimmer 1.5s infinite;
+    }
+
+    .info-skeleton {
+      @include flex(row, flex-start, center);
+      gap: 1rem;
+      margin-bottom: 0.75rem;
+
+      .year-skeleton,
+      .rating-skeleton {
+        height: 1rem;
+        width: 4rem;
+        border-radius: map.get($border-radius, "sm");
+        background: linear-gradient(
+          90deg,
+          var(--background) 25%,
+          var(--surface) 50%,
+          var(--background) 75%
+        );
+        background-size: 200% 100%;
+        animation: shimmer 1.5s infinite;
+      }
+    }
+
+    .overview-skeleton {
+      height: 1rem;
+      width: 100%;
+      margin-bottom: 0.5rem;
+      border-radius: map.get($border-radius, "sm");
+      background: linear-gradient(
+        90deg,
+        var(--background) 25%,
+        var(--surface) 50%,
+        var(--background) 75%
+      );
+      background-size: 200% 100%;
+      animation: shimmer 1.5s infinite;
+
+      &:nth-child(2) {
+        width: 90%;
+      }
+
+      &:nth-child(3) {
+        width: 80%;
+      }
+    }
+  }
+}
